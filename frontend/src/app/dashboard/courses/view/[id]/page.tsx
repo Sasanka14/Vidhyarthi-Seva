@@ -4,10 +4,47 @@ import { useParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Image from 'next/image';
 
+interface AccessOption {
+  type: string;
+  price: number;
+  views: number;
+  validity: string;
+}
+
+interface Faculty {
+  name?: string;
+  bio?: string;
+  experience?: string;
+  style?: string;
+  image?: string;
+}
+
+interface Course {
+  _id: string;
+  title: string;
+  description?: string;
+  lectures?: number;
+  hours?: number;
+  timings?: string;
+  batchStartDate?: string;
+  booksIncluded?: string[];
+  accessOptions?: AccessOption[];
+  platforms?: string[];
+  doubtSolvingPlatform?: string;
+  syllabusType?: string;
+  videoLanguage?: string;
+  systemRequirements?: {
+    supported?: string[];
+    notSupported?: string[];
+  };
+  faculty?: Faculty;
+  thumbnail?: string;
+}
+
 export default function CourseDetailsPage() {
   const { id } = useParams();
   const router = useRouter();
-  const [course, setCourse] = useState<Record<string, unknown> | null>(null);
+  const [course, setCourse] = useState<Course | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -22,7 +59,7 @@ export default function CourseDetailsPage() {
         const res = await fetch(`/api/courses/${id}`);
         const data = await res.json();
         if (data.success) {
-          setCourse(data.course);
+          setCourse(data.course as Course);
         } else {
           setError("Course not found");
         }
@@ -43,7 +80,7 @@ export default function CourseDetailsPage() {
 
   const handleProceed = () => {
     // Optionally, append details as query params if needed
-    window.open(selectedPaymentLink, '_blank');
+    // window.open(selectedPaymentLink, '_blank');
     setShowModal(false);
   };
 
@@ -136,7 +173,7 @@ export default function CourseDetailsPage() {
             <div className="mb-6">
               <h2 className="font-semibold text-lg mb-2">Books Included</h2>
               <ul className="list-disc list-inside text-gray-700">
-                {course.booksIncluded.map((book: string, idx: number) => (
+                {course.booksIncluded.map((book, idx) => (
                   <li key={idx}>{book}</li>
                 ))}
               </ul>
@@ -149,7 +186,6 @@ export default function CourseDetailsPage() {
               <div className="text-sm text-gray-700">Not Supported: {course.systemRequirements.notSupported?.join(", ") ?? '—'}</div>
             </div>
           )}
-          {payMsg && <div className="mt-4 text-center font-semibold text-blue-700">{payMsg}</div>}
         </div>
       </motion.div>
 
