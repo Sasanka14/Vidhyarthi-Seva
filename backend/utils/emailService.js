@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 
 // Create transporter
 const createTransporter = () => {
-  return nodemailer.createTransporter({
+  return nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
     secure: false, // true for 465, false for other ports
@@ -135,8 +135,36 @@ const sendWelcomeEmail = async (email, name) => {
   }
 };
 
+// Send contact form message to admin
+const sendContactMessage = async ({ firstName, lastName, email, phone, subject, message }) => {
+  const transporter = createTransporter();
+  const mailOptions = {
+    from: process.env.EMAIL_FROM,
+    to: process.env.EMAIL_TO || process.env.EMAIL_FROM, // fallback to self
+    subject: `Contact Form: ${subject}`,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2>New Contact Form Submission</h2>
+        <p><b>Name:</b> ${firstName} ${lastName}</p>
+        <p><b>Email:</b> ${email}</p>
+        <p><b>Phone:</b> ${phone}</p>
+        <p><b>Subject:</b> ${subject}</p>
+        <p><b>Message:</b><br/>${message.replace(/\n/g, '<br/>')}</p>
+      </div>
+    `
+  };
+  try {
+    await transporter.sendMail(mailOptions);
+    return true;
+  } catch (error) {
+    console.error('Contact form email error:', error);
+    return false;
+  }
+};
+
 module.exports = {
   sendEmailVerification,
   sendPasswordReset,
-  sendWelcomeEmail
+  sendWelcomeEmail,
+  sendContactMessage
 }; 

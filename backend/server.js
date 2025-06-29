@@ -18,6 +18,7 @@ const testSeriesRoutes = require('./routes/testSeries');
 const gymRoutes = require('./routes/gym');
 const libraryRoutes = require('./routes/library');
 const paymentsRoutes = require('./routes/payments');
+const contactRoutes = require('./routes/contact');
 
 // Import middleware
 const { errorHandler } = require('./middleware/errorHandler');
@@ -74,6 +75,7 @@ app.use('/api/test-series', testSeriesRoutes);
 app.use('/api/gym', gymRoutes);
 app.use('/api/library', libraryRoutes);
 app.use('/api/payments', paymentsRoutes);
+app.use('/api/contact', contactRoutes);
 
 // Error handling middleware
 app.use(errorHandler);

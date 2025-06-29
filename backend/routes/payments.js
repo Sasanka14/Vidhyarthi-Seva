@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const Payment = require('../models/Payment');
 const User = require('../models/User');
 const Course = require('../models/Course');
+const { protect } = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -70,6 +71,18 @@ router.get('/', async (req, res) => {
     res.json({ success: true, payments });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Failed to fetch payments', error: err.message });
+  }
+});
+
+// Get payments for the current user
+router.get('/my', protect, async (req, res) => {
+  try {
+    const payments = await Payment.find({ user: req.user.id })
+      .populate('course', 'title description thumbnail')
+      .sort({ createdAt: -1 });
+    res.json({ success: true, payments });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Failed to fetch your payments', error: err.message });
   }
 });
 
