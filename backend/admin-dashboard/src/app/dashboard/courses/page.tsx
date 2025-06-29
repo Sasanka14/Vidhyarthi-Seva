@@ -84,7 +84,7 @@ export default function CoursesPage() {
   });
 
   const getStatusBadge = (course: Course) => {
-    if (course.views?.live) return 'Live';
+    if (course.accessOptions?.some(opt => opt.type.toLowerCase().includes('live'))) return 'Live';
     if (course.batchRecording?.preRecorded) return 'Pre-recorded';
     return 'New';
   };
@@ -169,7 +169,7 @@ export default function CoursesPage() {
               <div>
                 <p className="text-sm font-medium text-green-600">Live Courses</p>
                 <p className="text-2xl font-bold text-green-900">
-                  {courses.filter(c => c.views?.live).length}
+                  {courses.filter(c => c.accessOptions?.some(opt => opt.type.toLowerCase().includes('live'))).length}
                 </p>
               </div>
               <div className="text-green-500 text-2xl">🔴</div>
