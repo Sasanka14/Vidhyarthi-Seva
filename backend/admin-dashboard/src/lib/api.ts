@@ -62,16 +62,16 @@ class ApiService {
   }
 
   // Authentication
-  async login(credentials: LoginForm): Promise<ApiResponse> {
-    const response: AxiosResponse<ApiResponse> = await this.api.post('/auth/login', credentials)
+  async login(credentials: LoginForm): Promise<ApiResponse<any>> {
+    const response: AxiosResponse<ApiResponse<any>> = await this.api.post('/auth/login', credentials)
     if (response.data.token) {
       this.setToken(response.data.token)
     }
     return response.data
   }
 
-  async register(userData: RegisterForm): Promise<ApiResponse> {
-    const response: AxiosResponse<ApiResponse> = await this.api.post('/auth/register', userData)
+  async register(userData: RegisterForm): Promise<ApiResponse<any>> {
+    const response: AxiosResponse<ApiResponse<any>> = await this.api.post('/auth/register', userData)
     if (response.data.token) {
       this.setToken(response.data.token)
     }
