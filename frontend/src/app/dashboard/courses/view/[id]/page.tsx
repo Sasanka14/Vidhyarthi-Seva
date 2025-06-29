@@ -76,7 +76,7 @@ export default function CourseDetailsPage() {
     router.push(`/checkout?courseId=${course?._id}&accessIdx=${accessIdx}`);
   };
 
-  const handleFormChange = (e: any) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleProceed = () => {
     // Optionally, append details as query params if needed
@@ -152,7 +152,7 @@ export default function CourseDetailsPage() {
             <div className="mb-6">
               <h2 className="font-semibold text-lg mb-2">Access Options</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {course.accessOptions.map((opt: any, idx: number) => (
+                {course.accessOptions?.map((opt: AccessOption, idx: number) => (
                   <div key={idx} className="border rounded-xl p-4 flex flex-col gap-2 bg-gray-50">
                     <div><b>Type:</b> {opt.type}</div>
                     <div><b>Price:</b> <span className="font-bold text-blue-700">₹{opt.price}</span></div>
