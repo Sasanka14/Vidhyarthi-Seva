@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
 interface Course {
@@ -17,7 +17,7 @@ interface AccessOption {
   validity: string;
 }
 
-export default function CheckoutPage() {
+function CheckoutContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const courseId = searchParams.get("courseId");
@@ -114,5 +114,13 @@ export default function CheckoutPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gradient-to-br from-blue-600 to-orange-500 flex items-center justify-center"><div className="text-white text-xl">Loading...</div></div>}>
+      <CheckoutContent />
+    </Suspense>
   );
 } 
