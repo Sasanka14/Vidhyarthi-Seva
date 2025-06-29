@@ -361,7 +361,7 @@ export default function Home() {
                 } else {
                   setStatus(result.message || 'error');
                 }
-              } catch (err) {
+              } catch {
                 setStatus('error');
               } finally {
                 setLoading(false);
