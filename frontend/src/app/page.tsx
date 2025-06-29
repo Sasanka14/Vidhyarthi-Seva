@@ -225,7 +225,7 @@ export default function Home() {
       {/* Why Choose Us */}
       <section id="why" className="w-full py-16 px-4 bg-transparent">
         <h2 className="text-4xl sm:text-5xl font-extrabold text-center text-gray-900 mb-4">Why Students Choose Vidhyarthi Seva</h2>
-        <p className="text-lg sm:text-xl text-center text-gray-700 mb-12 max-w-2xl mx-auto">We're committed to empowering every student's educational journey with trust, innovation, and care</p>
+        <p className="text-lg sm:text-xl text-center text-gray-700 mb-12 max-w-2xl mx-auto">We&apos;re committed to empowering every student&apos;s educational journey with trust, innovation, and care</p>
         <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
           {/* Card 1 */}
           <motion.div
@@ -293,7 +293,7 @@ export default function Home() {
       {/* Contact Us */}
       <section id="contact" className="w-full max-w-6xl mx-auto py-16 px-4">
         <h2 className="text-4xl sm:text-5xl font-extrabold text-center mb-2"><span className="text-gray-900">Get In</span> <span className="text-blue-600">Touch</span></h2>
-        <p className="text-lg sm:text-xl text-center text-gray-700 mb-10 max-w-2xl mx-auto">Ready to start your educational journey? Contact us today and let's discuss how we can help you achieve your goals.</p>
+        <p className="text-lg sm:text-xl text-center text-gray-700 mb-10 max-w-2xl mx-auto">Ready to start your educational journey? Contact us today and let&apos;s discuss how we can help you achieve your goals.</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Left: Contact Info */}
           <div className="flex flex-col gap-6">
@@ -369,7 +369,7 @@ export default function Home() {
             }}
           >
             <h3 className="font-bold text-lg text-gray-900 mb-2">Send us a Message</h3>
-            <p className="text-gray-600 text-sm mb-2">Fill out the form below and we'll get back to you shortly</p>
+            <p className="text-gray-600 text-sm mb-2">Fill out the form below and we&apos;ll get back to you shortly</p>
             <div className="flex flex-col sm:flex-row gap-4">
               <input name="firstName" type="text" placeholder="First Name *" className="flex-1 px-4 py-3 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none" required />
               <input name="lastName" type="text" placeholder="Last Name *" className="flex-1 px-4 py-3 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none" required />

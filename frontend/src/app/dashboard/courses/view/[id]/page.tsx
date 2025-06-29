@@ -4,19 +4,6 @@ import { useParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Image from 'next/image';
 
-// Razorpay script loader
-function loadRazorpayScript() {
-  return new Promise((resolve) => {
-    if (document.getElementById('razorpay-script')) return resolve(true);
-    const script = document.createElement('script');
-    script.id = 'razorpay-script';
-    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-    script.onload = () => resolve(true);
-    script.onerror = () => resolve(false);
-    document.body.appendChild(script);
-  });
-}
-
 export default function CourseDetailsPage() {
   const { id } = useParams();
   const router = useRouter();
@@ -63,12 +50,6 @@ export default function CourseDetailsPage() {
   if (loading) return <div className="p-10 text-center">Loading...</div>;
   if (error) return <div className="p-10 text-center text-red-600">{error}</div>;
   if (!course) return null;
-
-  // Find lowest price from accessOptions
-  let minPrice = undefined;
-  if (Array.isArray(course.accessOptions) && course.accessOptions.length > 0) {
-    minPrice = Math.min(...course.accessOptions.map((o: any) => o.price));
-  }
 
   return (
     <div className="max-w-3xl mx-auto py-10 px-4">
