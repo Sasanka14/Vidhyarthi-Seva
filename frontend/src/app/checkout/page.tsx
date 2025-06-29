@@ -17,6 +17,13 @@ interface AccessOption {
   validity: string;
 }
 
+// Define a type for Razorpay response
+interface RazorpayResponse {
+  razorpay_order_id: string;
+  razorpay_payment_id: string;
+  razorpay_signature: string;
+}
+
 function CheckoutContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -26,14 +33,12 @@ function CheckoutContent() {
   const [course, setCourse] = useState<Course | null>(null);
   const [accessOption, setAccessOption] = useState<AccessOption | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
   const [form, setForm] = useState({ name: "", email: "", phone: "" });
 
   useEffect(() => {
     if (!courseId) return;
     const fetchCourse = async () => {
       setLoading(true);
-      setError("");
       try {
         const res = await fetch(`/api/courses/${courseId}`);
         const data = await res.json();
@@ -105,7 +110,7 @@ function CheckoutContent() {
         name: "Vidhyarthi Seva",
         description: course.title,
         order_id: orderData.order.id,
-        handler: async function (response: any) {
+        handler: async function (response: RazorpayResponse) {
           try {
             // Verify payment
             const verifyRes = await fetch("/api/payments/verify", {
@@ -131,7 +136,7 @@ function CheckoutContent() {
             } else {
               setError("Payment verification failed");
             }
-          } catch (error) {
+          } catch {
             setError("Payment verification failed");
           }
         },
