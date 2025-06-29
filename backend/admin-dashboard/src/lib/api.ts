@@ -93,8 +93,8 @@ class ApiService {
     return response.data
   }
 
-  async updatePassword(passwordData: { currentPassword: string; newPassword: string }): Promise<ApiResponse> {
-    const response: AxiosResponse<ApiResponse> = await this.api.put('/auth/update-password', passwordData)
+  async updatePassword(passwordData: { currentPassword: string; newPassword: string }): Promise<ApiResponse<any>> {
+    const response: AxiosResponse<ApiResponse<any>> = await this.api.put('/auth/update-password', passwordData)
     return response.data
   }
 
@@ -120,18 +120,18 @@ class ApiService {
     return response.data
   }
 
-  async deleteUser(id: string): Promise<ApiResponse> {
-    const response: AxiosResponse<ApiResponse> = await this.api.delete(`/users/${id}`)
+  async deleteUser(id: string): Promise<ApiResponse<any>> {
+    const response: AxiosResponse<ApiResponse<any>> = await this.api.delete(`/users/${id}`)
     return response.data
   }
 
-  async getUserStats(): Promise<ApiResponse> {
-    const response: AxiosResponse<ApiResponse> = await this.api.get('/users/stats/overview')
+  async getUserStats(): Promise<ApiResponse<any>> {
+    const response: AxiosResponse<ApiResponse<any>> = await this.api.get('/users/stats/overview')
     return response.data
   }
 
-  async bulkUpdateUsers(userIds: string[], updates: any): Promise<ApiResponse> {
-    const response: AxiosResponse<ApiResponse> = await this.api.put('/users/bulk-update', {
+  async bulkUpdateUsers(userIds: string[], updates: any): Promise<ApiResponse<any>> {
+    const response: AxiosResponse<ApiResponse<any>> = await this.api.put('/users/bulk-update', {
       userIds,
       updates,
     })
