@@ -1,10 +1,21 @@
 import type { NextRequest } from 'next/server';
 
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(req: NextRequest) {
   try {
+    // Extract the id from the URL path
+    const pathname = req.nextUrl.pathname;
+    const id = pathname.split('/').pop();
+    
+    if (!id) {
+      return new Response(JSON.stringify({ 
+        success: false, 
+        message: 'User ID is required' 
+      }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
     const token = req.headers.get('authorization')?.replace('Bearer ', '');
     
     if (!token) {
@@ -20,7 +31,7 @@ export async function PUT(
     const data = await req.json();
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
     
-    const res = await fetch(`${backendUrl}/api/users/${params.id}`, {
+    const res = await fetch(`${backendUrl}/api/users/${id}`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`,
