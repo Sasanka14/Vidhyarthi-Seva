@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios'
-import { ApiResponse, PaginatedResponse, User, LoginForm, RegisterForm } from '@/types'
+import { ApiResponse, PaginatedResponse, User, LoginForm, RegisterForm, AuthResponse } from '@/types'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'
 
@@ -62,16 +62,16 @@ class ApiService {
   }
 
   // Authentication
-  async login(credentials: LoginForm): Promise<ApiResponse<any>> {
-    const response: AxiosResponse<ApiResponse<any>> = await this.api.post('/auth/login', credentials)
+  async login(credentials: LoginForm): Promise<AuthResponse> {
+    const response: AxiosResponse<AuthResponse> = await this.api.post('/auth/login', credentials)
     if (response.data.token) {
       this.setToken(response.data.token)
     }
     return response.data
   }
 
-  async register(userData: RegisterForm): Promise<ApiResponse<any>> {
-    const response: AxiosResponse<ApiResponse<any>> = await this.api.post('/auth/register', userData)
+  async register(userData: RegisterForm): Promise<AuthResponse> {
+    const response: AxiosResponse<AuthResponse> = await this.api.post('/auth/register', userData)
     if (response.data.token) {
       this.setToken(response.data.token)
     }
