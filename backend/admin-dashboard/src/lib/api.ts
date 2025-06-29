@@ -165,8 +165,8 @@ class ApiService {
     return response.data
   }
 
-  async deleteCourse(id: string): Promise<ApiResponse> {
-    const response: AxiosResponse<ApiResponse> = await this.api.delete(`/courses/${id}`)
+  async deleteCourse(id: string): Promise<ApiResponse<any>> {
+    const response: AxiosResponse<ApiResponse<any>> = await this.api.delete(`/courses/${id}`)
     return response.data
   }
 
@@ -205,8 +205,8 @@ class ApiService {
     return response.data
   }
 
-  async deleteMeal(id: string): Promise<ApiResponse> {
-    const response: AxiosResponse<ApiResponse> = await this.api.delete(`/meals/${id}`)
+  async deleteMeal(id: string): Promise<ApiResponse<any>> {
+    const response: AxiosResponse<ApiResponse<any>> = await this.api.delete(`/meals/${id}`)
     return response.data
   }
 
@@ -236,8 +236,8 @@ class ApiService {
     return response.data
   }
 
-  async deleteAccommodation(id: string): Promise<ApiResponse> {
-    const response: AxiosResponse<ApiResponse> = await this.api.delete(`/accommodations/${id}`)
+  async deleteAccommodation(id: string): Promise<ApiResponse<any>> {
+    const response: AxiosResponse<ApiResponse<any>> = await this.api.delete(`/accommodations/${id}`)
     return response.data
   }
 
@@ -267,8 +267,8 @@ class ApiService {
     return response.data
   }
 
-  async deleteMentor(id: string): Promise<ApiResponse> {
-    const response: AxiosResponse<ApiResponse> = await this.api.delete(`/mentors/${id}`)
+  async deleteMentor(id: string): Promise<ApiResponse<any>> {
+    const response: AxiosResponse<ApiResponse<any>> = await this.api.delete(`/mentors/${id}`)
     return response.data
   }
 
@@ -299,8 +299,8 @@ class ApiService {
     return response.data
   }
 
-  async deleteTestSeries(id: string): Promise<ApiResponse> {
-    const response: AxiosResponse<ApiResponse> = await this.api.delete(`/test-series/${id}`)
+  async deleteTestSeries(id: string): Promise<ApiResponse<any>> {
+    const response: AxiosResponse<ApiResponse<any>> = await this.api.delete(`/test-series/${id}`)
     return response.data
   }
 
@@ -329,8 +329,8 @@ class ApiService {
     return response.data
   }
 
-  async deleteGym(id: string): Promise<ApiResponse> {
-    const response: AxiosResponse<ApiResponse> = await this.api.delete(`/gym/${id}`)
+  async deleteGym(id: string): Promise<ApiResponse<any>> {
+    const response: AxiosResponse<ApiResponse<any>> = await this.api.delete(`/gym/${id}`)
     return response.data
   }
 
@@ -359,14 +359,14 @@ class ApiService {
     return response.data
   }
 
-  async deleteLibrary(id: string): Promise<ApiResponse> {
-    const response: AxiosResponse<ApiResponse> = await this.api.delete(`/library/${id}`)
+  async deleteLibrary(id: string): Promise<ApiResponse<any>> {
+    const response: AxiosResponse<ApiResponse<any>> = await this.api.delete(`/library/${id}`)
     return response.data
   }
 
   // Health Check
-  async healthCheck(): Promise<ApiResponse> {
-    const response: AxiosResponse<ApiResponse> = await this.api.get('/health')
+  async healthCheck(): Promise<ApiResponse<any>> {
+    const response: AxiosResponse<ApiResponse<any>> = await this.api.get('/health')
     return response.data
   }
 }
