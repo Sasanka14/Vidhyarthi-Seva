@@ -31,9 +31,8 @@ export default function CoursesPage() {
     try {
       setLoading(true);
       const response = await apiService.getCourses();
-      if (response.success || response.courses) {
-        // Support both {courses: Course[]} and paginated {data: Course[]}
-        setCourses(response.courses || response.data || []);
+      if (response.success && response.data) {
+        setCourses(response.data);
       } else {
         setError('Failed to fetch courses');
       }

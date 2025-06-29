@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
     res.status(200).json({
       success: true,
       count: courses.length,
-      courses
+      data: courses
     });
   } catch (error) {
     console.error('Error fetching courses:', error);
