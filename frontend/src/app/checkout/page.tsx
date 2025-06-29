@@ -45,7 +45,7 @@ export default function CheckoutPage() {
         } else {
           setError("Course not found");
         }
-      } catch (err) {
+      } catch {
         setError("Failed to fetch course");
       } finally {
         setLoading(false);

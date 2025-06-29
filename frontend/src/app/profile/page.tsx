@@ -57,7 +57,7 @@ export default function ProfilePage() {
     }
 
     fetchUserProfile();
-  }, [router]);
+  }, [router, fetchUserProfile]);
 
   const fetchUserProfile = async () => {
     try {

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Search, Layers, User, Video, BookOpen } from "lucide-react";
+import Image from 'next/image';
 
 interface Course {
   _id: string;
@@ -17,6 +18,7 @@ interface Course {
   videoLanguage?: string;
   faculty?: { name?: string };
   thumbnail?: string;
+  accessOptions?: { price: number }[];
 }
 
 export default function CoursesPage() {
@@ -44,7 +46,7 @@ export default function CoursesPage() {
         } else {
           setError("Failed to fetch courses");
         }
-      } catch (err) {
+      } catch {
         setError("Failed to fetch courses");
       } finally {
         setLoading(false);
@@ -143,12 +145,14 @@ export default function CoursesPage() {
           {filtered.map(course => {
             // Find lowest price from accessOptions
             let minPrice = undefined;
-            if (Array.isArray((course as any).accessOptions) && (course as any).accessOptions.length > 0) {
-              minPrice = Math.min(...(course as any).accessOptions.map((o: any) => o.price));
+            if (Array.isArray(course.accessOptions) && course.accessOptions.length > 0) {
+              minPrice = Math.min(...course.accessOptions.map((o) => o.price));
             }
             return (
               <div key={course._id} className="bg-white rounded-xl shadow p-5 flex flex-col gap-2">
-                {course.thumbnail && <img src={course.thumbnail} alt={course.title} className="w-full h-40 object-cover rounded mb-2" />}
+                {course.thumbnail && (
+                  <Image src={course.thumbnail} alt={course.title} width={400} height={160} className="w-full h-40 object-cover rounded mb-2" />
+                )}
                 <h2 className="font-bold text-lg">{course.title}</h2>
                 <div className="text-gray-600 text-sm line-clamp-2">{course.description}</div>
                 <div className="text-xs text-gray-500">{course.platforms?.join(", ")}</div>

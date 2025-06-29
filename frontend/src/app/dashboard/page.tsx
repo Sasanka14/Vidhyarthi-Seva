@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from 'next/image';
 
 interface Course {
   _id: string;
@@ -40,7 +41,7 @@ export default function UserDashboard() {
         } else {
           setError(data.message || "Failed to fetch purchases");
         }
-      } catch (err) {
+      } catch {
         setError("Failed to fetch purchases");
       } finally {
         setLoading(false);

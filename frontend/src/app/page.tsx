@@ -1,7 +1,6 @@
 "use client";
-import Image from "next/image";
 import { motion } from "framer-motion";
-import { GraduationCap, Facebook, Twitter, Instagram, Linkedin, BedDouble, BookOpen, Users, Library, Dumbbell, Utensils, FileBarChart2, ShieldCheck, Zap, Heart, TrendingUp, Mail, MapPin, Phone, MessageCircle } from "lucide-react";
+import { GraduationCap, Twitter, Instagram, Linkedin, BedDouble, BookOpen, Users, Library, Dumbbell, Utensils, FileBarChart2, ShieldCheck, Zap, Heart, TrendingUp, Mail, MapPin, Phone, MessageCircle } from "lucide-react";
 import React, { useState, useRef } from 'react';
 
 export default function Home() {

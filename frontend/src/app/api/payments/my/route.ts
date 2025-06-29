@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
       status: res.status,
       headers: { 'Content-Type': 'application/json' },
     });
-  } catch (error) {
+  } catch {
     return new Response(JSON.stringify({ success: false, message: 'Internal server error' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },

@@ -1,5 +1,3 @@
-import type { NextRequest } from 'next/server';
-
 export async function GET(req: Request, context: { params: { id?: string } }) {
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
   // If there is an id param, fetch a single course

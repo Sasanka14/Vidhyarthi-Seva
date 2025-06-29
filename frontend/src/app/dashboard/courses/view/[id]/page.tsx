@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import Image from 'next/image';
 
 // Razorpay script loader
 function loadRazorpayScript() {
@@ -19,13 +20,10 @@ function loadRazorpayScript() {
 export default function CourseDetailsPage() {
   const { id } = useParams();
   const router = useRouter();
-  const [course, setCourse] = useState<any>(null);
+  const [course, setCourse] = useState<Record<string, unknown> | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [paying, setPaying] = useState(false);
-  const [payMsg, setPayMsg] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [selectedPaymentLink, setSelectedPaymentLink] = useState("");
   const [form, setForm] = useState({ name: "", email: "", phone: "" });
 
   useEffect(() => {
@@ -41,7 +39,7 @@ export default function CourseDetailsPage() {
         } else {
           setError("Course not found");
         }
-      } catch (err) {
+      } catch {
         setError("Failed to fetch course");
       } finally {
         setLoading(false);
@@ -51,7 +49,7 @@ export default function CourseDetailsPage() {
   }, [id]);
 
   const handleBuyNow = (accessIdx: number) => {
-    router.push(`/checkout?courseId=${course._id}&accessIdx=${accessIdx}`);
+    router.push(`/checkout?courseId=${course?._id}&accessIdx=${accessIdx}`);
   };
 
   const handleFormChange = (e: any) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -82,9 +80,11 @@ export default function CourseDetailsPage() {
       >
         {course.thumbnail && (
           <div className="w-full h-56 sm:h-72 bg-gray-100 overflow-hidden flex items-center justify-center">
-            <img
-              src={course.thumbnail}
-              alt={course.title}
+            <Image
+              src={course.thumbnail as string}
+              alt={course.title as string}
+              width={600}
+              height={288}
               className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
             />
           </div>
@@ -114,7 +114,7 @@ export default function CourseDetailsPage() {
             <div className="mb-6">
               <h2 className="font-semibold text-lg mb-2">Faculty</h2>
               <div className="flex items-center gap-4">
-                {course.faculty.image && <img src={course.faculty.image} alt={course.faculty.name} className="w-16 h-16 rounded-full object-cover border-2 border-blue-200" />}
+                {course.faculty.image && <Image src={course.faculty.image as string} alt={course.faculty.name as string} width={64} height={64} className="w-16 h-16 rounded-full object-cover border-2 border-blue-200" />}
                 <div>
                   <div className="font-bold text-gray-900">{course.faculty.name}</div>
                   {course.faculty.bio && (
