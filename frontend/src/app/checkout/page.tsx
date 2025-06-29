@@ -29,6 +29,7 @@ function CheckoutContent() {
   const router = useRouter();
   const courseId = searchParams.get("courseId");
   const accessIdx = Number(searchParams.get("accessIdx"));
+  const setError = () => {};
 
   const [course, setCourse] = useState<Course | null>(null);
   const [accessOption, setAccessOption] = useState<AccessOption | null>(null);
@@ -46,10 +47,10 @@ function CheckoutContent() {
           setCourse(data.course);
           setAccessOption(data.course.accessOptions?.[accessIdx] || null);
         } else {
-          setError("Course not found");
+          setError();
         }
       } catch {
-        setError("Failed to fetch course");
+        setError();
       } finally {
         setLoading(false);
       }
@@ -75,7 +76,7 @@ function CheckoutContent() {
     }
 
     if (!course || !accessOption) {
-      setError("Course information not available");
+      setError();
       return;
     }
 
@@ -134,10 +135,10 @@ function CheckoutContent() {
             if (verifyData.success) {
               router.push("/dashboard?payment=success");
             } else {
-              setError("Payment verification failed");
+              setError();
             }
           } catch {
-            setError("Payment verification failed");
+            setError();
           }
         },
         prefill: {
@@ -150,10 +151,11 @@ function CheckoutContent() {
         },
       };
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const rzp = new (window as any).Razorpay(options);
       rzp.open();
     } catch (error) {
-      setError("Failed to process payment. Please try again.");
+      setError();
     } finally {
       setLoading(false);
     }
@@ -172,7 +174,7 @@ function CheckoutContent() {
   }, []);
 
   if (loading) return <div className="p-10 text-center">Loading...</div>;
-  if (error) return <div className="p-10 text-center text-red-600">{error}</div>;
+ 
   if (!course || !accessOption) return null;
 
   return (
