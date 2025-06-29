@@ -39,9 +39,22 @@ export default function CheckoutPage() {
     fetchCourse();
   }, [courseId, accessIdx]);
 
+  useEffect(() => {
+    // Check for user login
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    if (!token) {
+      router.replace("/login?redirect=/checkout" + window.location.search);
+    }
+  }, [router]);
+
   const handleFormChange = (e: any) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleProceed = () => {
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    if (!token) {
+      router.replace("/login?redirect=/checkout" + window.location.search);
+      return;
+    }
     window.open(RAZORPAY_ME_LINK, '_blank');
   };
 

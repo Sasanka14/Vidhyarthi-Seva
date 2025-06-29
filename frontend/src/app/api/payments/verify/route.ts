@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
         headers: { 'Content-Type': 'application/json' },
       });
     }
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://vidhyarthi-seva.onrender.com';
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
     const body = await req.json();
     const res = await fetch(`${backendUrl}/api/payments/verify`, {
       method: 'POST',

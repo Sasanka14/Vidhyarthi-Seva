@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { Search, Layers, User, Video, BookOpen } from "lucide-react";
 
 interface Course {
   _id: string;
@@ -65,12 +66,71 @@ export default function CoursesPage() {
   return (
     <div className="max-w-6xl mx-auto py-10 px-4">
       <h1 className="text-3xl font-bold mb-6">Courses</h1>
-      <div className="flex flex-wrap gap-4 mb-8">
-        <input value={title} onChange={e => setTitle(e.target.value)} placeholder="Search by title" className="px-3 py-2 border rounded" />
-        <input value={platform} onChange={e => setPlatform(e.target.value)} placeholder="Platform" className="px-3 py-2 border rounded" />
-        <input value={faculty} onChange={e => setFaculty(e.target.value)} placeholder="Faculty" className="px-3 py-2 border rounded" />
-        <input value={videoLanguage} onChange={e => setVideoLanguage(e.target.value)} placeholder="Video Language" className="px-3 py-2 border rounded" />
-        <input value={syllabusType} onChange={e => setSyllabusType(e.target.value)} placeholder="Syllabus Type" className="px-3 py-2 border rounded" />
+      {/* Modern Filter Bar */}
+      <div className="w-full max-w-5xl mx-auto mb-8">
+        <div className="bg-white/80 rounded-xl shadow flex flex-col md:flex-row gap-4 p-4 items-center">
+          <div className="flex-1 flex flex-col md:flex-row gap-2 w-full">
+            <div className="relative w-full">
+              <Search className="absolute left-3 top-3 text-gray-400" size={18} />
+              <input
+                className="pl-10 pr-3 py-2 rounded-lg border border-gray-300 w-full focus:ring-2 focus:ring-blue-500"
+                placeholder="Search by title"
+                value={title}
+                onChange={e => setTitle(e.target.value)}
+              />
+            </div>
+            <div className="relative w-full">
+              <Layers className="absolute left-3 top-3 text-gray-400" size={18} />
+              <input
+                className="pl-10 pr-3 py-2 rounded-lg border border-gray-300 w-full focus:ring-2 focus:ring-blue-500"
+                placeholder="Platform"
+                value={platform}
+                onChange={e => setPlatform(e.target.value)}
+              />
+            </div>
+            <div className="relative w-full">
+              <User className="absolute left-3 top-3 text-gray-400" size={18} />
+              <input
+                className="pl-10 pr-3 py-2 rounded-lg border border-gray-300 w-full focus:ring-2 focus:ring-blue-500"
+                placeholder="Faculty"
+                value={faculty}
+                onChange={e => setFaculty(e.target.value)}
+              />
+            </div>
+            <div className="relative w-full">
+              <Video className="absolute left-3 top-3 text-gray-400" size={18} />
+              <input
+                className="pl-10 pr-3 py-2 rounded-lg border border-gray-300 w-full focus:ring-2 focus:ring-blue-500"
+                placeholder="Video Language"
+                value={videoLanguage}
+                onChange={e => setVideoLanguage(e.target.value)}
+              />
+            </div>
+            <div className="relative w-full">
+              <BookOpen className="absolute left-3 top-3 text-gray-400" size={18} />
+              <input
+                className="pl-10 pr-3 py-2 rounded-lg border border-gray-300 w-full focus:ring-2 focus:ring-blue-500"
+                placeholder="Syllabus Type"
+                value={syllabusType}
+                onChange={e => setSyllabusType(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="flex gap-2 mt-2 md:mt-0">
+            <button
+              onClick={() => {}}
+              className="px-4 py-2 rounded-lg bg-gradient-to-br from-blue-600 to-orange-500 text-white font-semibold shadow hover:from-orange-500 hover:to-blue-600 transition"
+            >
+              Search
+            </button>
+            <button
+              onClick={() => { setTitle(""); setPlatform(""); setFaculty(""); setVideoLanguage(""); setSyllabusType(""); }}
+              className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 font-semibold shadow hover:bg-gray-300 transition"
+            >
+              Clear
+            </button>
+          </div>
+        </div>
       </div>
       {loading ? (
         <div>Loading...</div>

@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
       });
     }
 
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://vidhyarthi-seva.onrender.com';
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
     
     const res = await fetch(`${backendUrl}/api/auth/me`, {
       headers: {
