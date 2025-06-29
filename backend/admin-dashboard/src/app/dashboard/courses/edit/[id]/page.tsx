@@ -167,7 +167,11 @@ export default function EditCoursePage() {
     });
   };
 
-  const handleAccessOptionChange = (index: number, field: string, value: string) => {
+  const handleAccessOptionChange = (
+    index: number,
+    field: 'type' | 'price' | 'views' | 'validity',
+    value: string
+  ) => {
     setFormData(prev => {
       const accessOptions = [...prev.accessOptions];
       accessOptions[index][field] = value;
