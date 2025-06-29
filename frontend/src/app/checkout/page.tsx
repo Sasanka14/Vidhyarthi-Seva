@@ -29,8 +29,6 @@ function CheckoutContent() {
   const [error, setError] = useState("");
   const [form, setForm] = useState({ name: "", email: "", phone: "" });
 
-  const RAZORPAY_ME_LINK = process.env.NEXT_PUBLIC_RAZORPAY_ME_LINK || "https://razorpay.me/@vivekgupta9697";
-
   useEffect(() => {
     if (!courseId) return;
     const fetchCourse = async () => {
@@ -64,14 +62,109 @@ function CheckoutContent() {
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleProceed = () => {
+  const handleProceed = async () => {
     const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
     if (!token) {
       router.replace("/login?redirect=/checkout" + window.location.search);
       return;
     }
-    window.open(RAZORPAY_ME_LINK, '_blank');
+
+    if (!course || !accessOption) {
+      setError("Course information not available");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      
+      // Create Razorpay order
+      const orderRes = await fetch("/api/payments/create-order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          amount: accessOption.price,
+          courseId: course._id,
+          userId: JSON.parse(localStorage.getItem("user") || "{}").id,
+        }),
+      });
+
+      const orderData = await orderRes.json();
+
+      if (!orderData.success) {
+        throw new Error(orderData.message || "Failed to create order");
+      }
+
+      // Initialize Razorpay
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: orderData.order.amount,
+        currency: orderData.order.currency,
+        name: "Vidhyarthi Seva",
+        description: course.title,
+        order_id: orderData.order.id,
+        handler: async function (response: any) {
+          try {
+            // Verify payment
+            const verifyRes = await fetch("/api/payments/verify", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+              },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                courseId: course._id,
+                userId: JSON.parse(localStorage.getItem("user") || "{}").id,
+                amount: accessOption.price,
+              }),
+            });
+
+            const verifyData = await verifyRes.json();
+
+            if (verifyData.success) {
+              router.push("/dashboard?payment=success");
+            } else {
+              setError("Payment verification failed");
+            }
+          } catch (error) {
+            setError("Payment verification failed");
+          }
+        },
+        prefill: {
+          name: form.name,
+          email: form.email,
+          contact: form.phone,
+        },
+        theme: {
+          color: "#667eea",
+        },
+      };
+
+      const rzp = new (window as any).Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      setError("Failed to process payment. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
+
+  // Load Razorpay script
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   if (loading) return <div className="p-10 text-center">Loading...</div>;
   if (error) return <div className="p-10 text-center text-red-600">{error}</div>;
@@ -106,8 +199,12 @@ function CheckoutContent() {
               <label className="font-semibold text-gray-700">Phone Number</label>
               <input name="phone" value={form.phone} onChange={handleFormChange} placeholder="Phone" className="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" required />
             </div>
-            <button type="submit" className="mt-4 bg-gradient-to-br from-blue-600 to-orange-500 text-white font-bold py-3 rounded-lg hover:from-orange-500 hover:to-blue-600 transition text-lg shadow">
-              Proceed to Pay
+            <button 
+              type="submit" 
+              disabled={loading}
+              className="mt-4 bg-gradient-to-br from-blue-600 to-orange-500 text-white font-bold py-3 rounded-lg hover:from-orange-500 hover:to-blue-600 transition text-lg shadow disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? "Processing..." : "Proceed to Pay"}
             </button>
           </form>
           <button onClick={() => router.back()} className="w-full mt-2 text-gray-500 hover:text-blue-600 font-medium transition">Cancel</button>
