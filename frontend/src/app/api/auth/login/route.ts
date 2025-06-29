@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 export async function POST(req: NextRequest) {
   try {
     const data = await req.json();
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://vidhyarthi-seva.onrender.com';
     
     const res = await fetch(`${backendUrl}/api/auth/login`, {
       method: 'POST',
