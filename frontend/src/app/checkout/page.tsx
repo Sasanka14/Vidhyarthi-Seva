@@ -2,14 +2,29 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
+interface Course {
+  _id: string;
+  title: string;
+  description?: string;
+  accessOptions?: AccessOption[];
+  // add other fields as needed
+}
+
+interface AccessOption {
+  type: string;
+  price: number;
+  views: number;
+  validity: string;
+}
+
 export default function CheckoutPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const courseId = searchParams.get("courseId");
   const accessIdx = Number(searchParams.get("accessIdx"));
 
-  const [course, setCourse] = useState<any>(null);
-  const [accessOption, setAccessOption] = useState<any>(null);
+  const [course, setCourse] = useState<Course | null>(null);
+  const [accessOption, setAccessOption] = useState<AccessOption | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [form, setForm] = useState({ name: "", email: "", phone: "" });
@@ -47,7 +62,7 @@ export default function CheckoutPage() {
     }
   }, [router]);
 
-  const handleFormChange = (e: any) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleProceed = () => {
     const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
