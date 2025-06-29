@@ -300,9 +300,9 @@ export default function CoursesPage() {
                         <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(getStatusBadge(course))}`}>
                           {getStatusBadge(course)}
                         </span>
-                        {course.validity && (
+                        {course.accessOptions?.[0]?.validity && (
                           <span className="text-xs text-gray-500">
-                            Valid: {course.validity}
+                            Valid: {course.accessOptions[0].validity}
                           </span>
                         )}
                       </div>
