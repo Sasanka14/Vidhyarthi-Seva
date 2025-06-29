@@ -48,7 +48,7 @@ router.get('/:id', async (req, res) => {
     
     res.status(200).json({
       success: true,
-      course
+      data: course
     });
   } catch (error) {
     console.error('Error fetching course:', error);
@@ -98,7 +98,7 @@ router.post('/', [
     res.status(201).json({
       success: true,
       message: 'Course created successfully',
-      course
+      data: course
     });
 
   } catch (error) {
@@ -161,7 +161,7 @@ router.put('/:id', [
     res.status(200).json({
       success: true,
       message: 'Course updated successfully',
-      course
+      data: course
     });
 
   } catch (error) {

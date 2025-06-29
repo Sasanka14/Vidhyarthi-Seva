@@ -68,8 +68,8 @@ export default function EditCoursePage() {
       setLoading(true);
       const response = await apiService.getCourse(courseId);
       
-      if (response.success && response.course) {
-        const courseData = response.course;
+      if (response.success && response.data) {
+        const courseData = response.data;
         setCourse(courseData);
         
         // Format the data for the form
