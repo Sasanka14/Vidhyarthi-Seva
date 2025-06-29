@@ -1,4 +1,4 @@
-export async function GET(req: Request) {
+export async function GET() {
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
   const res = await fetch(`${backendUrl}/api/courses`);
   const data = await res.json();
